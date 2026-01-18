@@ -1,0 +1,37 @@
+# Epic: Previous Recordings Panel
+id: "EPIC-006"
+title: "Previous Recordings Panel"
+status: done
+priority: p1
+owner: null
+milestone: null
+spec: "SPEC-004"
+description: |
+  Add a left sidebar panel on the landing page showing all previous recordings
+  from ~/Movies/Walkthru/ with thumbnails, metadata, and management actions.
+
+  Features:
+  - List all previous recordings with thumbnails
+  - Display filename, date, and file size
+  - Play/preview recordings in the main area
+  - Export (copy) recordings to a different location
+  - Delete recordings (move to trash)
+  - Auto-refresh list after new recording is saved
+acceptance_criteria:
+  - "Left sidebar displays on landing page"
+  - "All recordings from ~/Movies/Walkthru/ are listed"
+  - "Recordings show thumbnail, name, date, and size"
+  - "Clicking a recording plays it in the main area"
+  - "Export button opens save dialog and copies file"
+  - "Delete button removes recording (to trash)"
+  - "List updates after saving a new recording"
+  - "Empty state shown when no recordings exist"
+dependencies: []
+issues: []
+labels:
+  - "feature"
+  - "ui"
+  - "file-management"
+target_date: null
+created_at: "2026-01-18"
+updated_at: "2026-01-18"

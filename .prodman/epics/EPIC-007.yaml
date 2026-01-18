@@ -1,0 +1,36 @@
+# Epic: Window-Specific Recording
+id: "EPIC-007"
+title: "Window-Specific Recording"
+status: done
+priority: p1
+owner: null
+milestone: null
+spec: "SPEC-005"
+description: |
+  Add a source picker UI that appears before recording starts, allowing users
+  to select a specific window or screen to record instead of auto-selecting
+  the first screen.
+
+  Features:
+  - Modal overlay with available screens and windows
+  - Live thumbnails for each source
+  - Tab switcher between Screens and Windows
+  - App icons shown for window sources
+  - Selected source used for recording
+acceptance_criteria:
+  - "Source picker modal appears when Record is clicked"
+  - "All available screens are listed with thumbnails"
+  - "All available windows are listed with thumbnails and app icons"
+  - "User can switch between Screens and Windows tabs"
+  - "Selecting a source and clicking Share starts recording that source"
+  - "Cancel button returns to idle state"
+  - "Recording captures only the selected window/screen"
+dependencies: []
+issues: []
+labels:
+  - "feature"
+  - "ui"
+  - "recording"
+target_date: null
+created_at: "2026-01-18"
+updated_at: "2026-01-18"

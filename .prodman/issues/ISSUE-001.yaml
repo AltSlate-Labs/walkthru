@@ -1,0 +1,22 @@
+id: "ISSUE-001"
+title: "Window thumbnails not displaying in Source Picker"
+status: resolved
+priority: p1
+epic: "EPIC-007"
+type: bug
+description: |
+  In the Source Picker modal, when switching to the "Windows" tab, the window
+  thumbnails are not displayed. The window names appear correctly, but the
+  thumbnail images show as broken/empty placeholders.
+  
+  The Screens tab appears to work correctly with thumbnails visible.
+steps_to_reproduce:
+  - "Click the Record button"
+  - "Source Picker modal opens"
+  - "Click on the 'Windows' tab"
+  - "Observe that window cards show names but no thumbnail images"
+expected_behavior: "Each window card should display a live thumbnail preview of the window content"
+actual_behavior: "Window cards show broken image placeholders instead of thumbnails"
+workaround: null
+created_at: "2026-01-18"
+updated_at: "2026-01-18"

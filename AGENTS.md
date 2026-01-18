@@ -60,6 +60,29 @@ After completing an epic, verify ALL acceptance criteria before marking complete
 
 ---
 
+## Proactive Issue Logging
+
+**When you discover a bug or issue during development or testing, ALWAYS log it to `.prodman/issues/` immediately.**
+
+This ensures issues are tracked even if they are not immediately fixed. Follow this process:
+
+1. **Identify** - Notice unexpected behavior, visual bugs, or functionality issues
+2. **Document** - Create an issue file following the template in `.prodman/issues/`
+3. **Increment counter** - Update `counters.issue` in `.prodman/config.yaml`
+4. **Reference** - Link to the related epic if applicable
+5. **Continue or Fix** - Either fix immediately or continue with current work
+
+### When to Log Issues
+
+- Visual bugs (broken images, misaligned elements, missing styles)
+- Functional bugs (features not working as specified)
+- Edge cases discovered during testing
+- Performance problems
+- Missing error handling
+- Platform-specific issues
+
+**Do not skip issue logging** - even if you plan to fix immediately, the issue record provides valuable documentation.
+
 ## Updating Status in .prodman/
 
 ### When Starting an Epic

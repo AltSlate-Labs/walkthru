@@ -7,7 +7,16 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // IPC methods
   invoke: (channel: string, ...args: unknown[]) => {
-    const validChannels = ['save-recording', 'delete-recording', 'get-save-path']
+    const validChannels = [
+      'save-recording',
+      'delete-recording',
+      'get-save-path',
+      'list-recordings',
+      'export-recording',
+      'get-desktop-sources',
+      'set-recording-source',
+      'check-screen-permission'
+    ]
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, ...args)
     }

@@ -99,8 +99,15 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .stop-button {
@@ -232,8 +239,17 @@ body {
 }
 
 @keyframes countdown-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 .countdown-cancel {
@@ -412,4 +428,398 @@ body {
 .discard-button:hover {
   color: #e63946;
   border-color: #e63946;
+}
+
+/* ========================================
+   App Layout with Sidebar
+   ======================================== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 280px;
+  background: #15152a;
+  border-right: 1px solid #2a2a4a;
+  flex-shrink: 0;
+  overflow-y: auto;
+  -webkit-app-region: drag;
+  padding-top: 2rem;
+  /* Avoid traffic lights */
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  -webkit-app-region: drag;
+}
+
+/* ========================================
+   Recordings Panel (EPIC-006)
+   ======================================== */
+.recordings-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-app-region: no-drag;
+}
+
+.recordings-header {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.recordings-header h2 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recordings-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.recordings-loading,
+.recordings-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #666;
+}
+
+.recordings-empty p {
+  margin: 0;
+}
+
+.recordings-empty-hint {
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 0.5rem !important;
+}
+
+.recording-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.recording-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.recording-thumbnail-placeholder {
+  width: 48px;
+  height: 36px;
+  background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.recording-icon {
+  color: #e63946;
+  font-size: 0.8rem;
+}
+
+.recording-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.recording-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recording-meta {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.15rem;
+}
+
+.recording-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.recording-item:hover .recording-actions {
+  opacity: 1;
+}
+
+.recording-action-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.recording-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.recording-action-delete:hover {
+  background: rgba(230, 57, 70, 0.2);
+  color: #e63946;
+}
+
+/* ========================================
+   Source Picker Modal (EPIC-007)
+   ======================================== */
+.source-picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  -webkit-app-region: no-drag;
+}
+
+.source-picker {
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  background: #1a1a2e;
+  border-radius: 12px;
+  border: 1px solid #2a2a4a;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.source-picker-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.source-picker-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.source-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.source-tab {
+  background: transparent;
+  border: 1px solid #3a3a5a;
+  color: #888;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.source-tab:hover {
+  color: #fff;
+  border-color: #555;
+}
+
+.source-tab.active {
+  background: #e63946;
+  border-color: #e63946;
+  color: #fff;
+}
+
+.source-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  align-content: start;
+}
+
+.source-loading,
+.source-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+.source-card {
+  background: #15152a;
+  border: 2px solid #2a2a4a;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.source-card:hover {
+  border-color: #3a3a5a;
+  transform: translateY(-2px);
+}
+
+.source-card.selected {
+  border-color: #e63946;
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+}
+
+.source-info {
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #15152a;
+  min-height: 44px;
+}
+
+.source-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.source-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.source-picker-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #2a2a4a;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.source-cancel-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #888;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.source-cancel-btn:hover {
+  color: #fff;
+  border-color: #666;
+}
+
+.source-share-btn {
+  background: #e63946;
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.source-share-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+  transform: translateY(-1px);
+}
+
+.source-share-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Source thumbnail placeholder */
+.source-thumbnail-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0a0a15;
+  overflow: hidden;
+}
+
+.source-thumbnail-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.6;
+}
+
+.source-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Permission Warning */
+.permission-warning {
+  background: rgba(230, 57, 70, 0.15);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.warning-icon {
+  font-size: 1.25rem;
+}
+
+.warning-text strong {
+  display: block;
+  color: #e63946;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.warning-text p {
+  color: #ccc;
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
 }
