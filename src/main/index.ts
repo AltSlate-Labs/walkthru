@@ -19,11 +19,14 @@ let mainWindow: BrowserWindow | null = null
 let selectedSourceId: string | null = null
 
 function createWindow() {
+  const iconPath = path.join(__dirname, '../../public/icon.png')
+
   mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     minWidth: 600,
     minHeight: 400,
+    icon: iconPath, // Window icon (Windows/Linux)
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -72,6 +75,11 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // Set Dock icon on macOS (Dev mode)
+  if (process.platform === 'darwin' && process.env.VITE_DEV_SERVER_URL) {
+    app.dock.setIcon(iconPath)
+  }
 }
 
 // Generate filename with timestamp
