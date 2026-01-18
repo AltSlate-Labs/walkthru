@@ -1,0 +1,35 @@
+# Product Definition
+schema_version: 1
+name: Walkthru
+tagline: "Local-first screen recording that feels as fast as taking a screenshot"
+description: |
+  A local-first, privacy-respecting screen recorder for async video communication.
+  Record screen + voice + face and immediately save or share files without relying on the cloud.
+vision: |
+  A local-first, privacy-respecting screen recorder that feels as fast as taking a screenshot.
+  Speed, reliability, zero backend dependency, and clean UX.
+principles:
+  - "Privacy first: No network calls, no telemetry, no cloud sync"
+  - "Speed matters: Recording start latency < 500ms"
+  - "Offline by default: Works without internet connection"
+  - "Simple UX: Minimal friction for quick recordings"
+okrs:
+  - objective: "Deliver a reliable local-first screen recording MVP"
+    key_results:
+      - "Time to first recording < 60 seconds"
+      - "Recording success rate > 95%"
+      - "App cold start < 2 seconds"
+      - "Zero backend dependency"
+target_users:
+  - name: "Developers"
+    description: "Explaining code, recording bug reproductions"
+  - name: "Product Managers"
+    description: "Sharing walkthroughs, documenting features"
+  - name: "Founders"
+    description: "Recording demos, async pitch videos"
+  - name: "Sales Engineers"
+    description: "Creating async explanations for prospects"
+  - name: "Remote Teams"
+    description: "Async feedback and communication"
+created_at: 2026-01-17
+updated_at: 2026-01-17

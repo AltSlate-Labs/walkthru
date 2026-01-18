@@ -1,0 +1,42 @@
+# Product Roadmap
+schema_version: 1
+milestones:
+  - id: "MVP-W1"
+    title: "MVP Week 1 - Core Recording"
+    description: |
+      App shell (Electron), screen + mic recording, save file locally
+    status: planned
+    target_date: null
+    epics:
+      - "EPIC-001"
+      - "EPIC-002"
+      - "EPIC-003"
+    deliverables:
+      - "Electron app shell with Vite + TypeScript + React"
+      - "Screen capture (entire screen, window, or tab)"
+      - "Microphone audio capture"
+      - "Local file save in webm format"
+  - id: "MVP-W2"
+    title: "MVP Week 2 - Polish & Playback"
+    description: |
+      Webcam overlay, playback screen, UX polish
+    status: planned
+    target_date: null
+    epics:
+      - "EPIC-004"
+      - "EPIC-005"
+    deliverables:
+      - "Optional webcam picture-in-picture overlay"
+      - "Recording controls (start, pause, stop, countdown)"
+      - "Basic local playback screen"
+      - "UX polish and permission handling"
+releases:
+  - id: "v0.1.0"
+    title: "MVP Release"
+    description: "Local-first screen recording MVP for macOS"
+    status: planned
+    milestones:
+      - "MVP-W1"
+      - "MVP-W2"
+    target_date: null
+updated_at: 2026-01-17

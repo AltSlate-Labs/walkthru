@@ -1,0 +1,45 @@
+# Epic: Playback & File Management
+id: "EPIC-005"
+title: "Playback & File Management"
+status: completed
+priority: p1
+owner: null
+milestone: "MVP-W2"
+spec: "SPEC-003"
+description: |
+  Implement local playback and file management features.
+
+  Playback:
+  - Basic local playback screen
+  - Play / pause
+  - Scrub timeline
+
+  File Management:
+  - Save to user-selected folder or default recordings folder
+  - Auto filename: recording-YYYY-MM-DD-HHMM.webm
+  - Delete recording
+
+  File Format:
+  - WebM (MVP)
+  - No trimming or transcoding in MVP
+acceptance_criteria:
+  - "Playback screen displays after recording"
+  - "Play/pause controls work"
+  - "Timeline scrubbing functional"
+  - "File saves to selected or default folder"
+  - "Auto-generated filename follows format"
+  - "Delete recording removes file from disk"
+  - "Crash-safe recording stop"
+dependencies:
+  - "EPIC-001"
+  - "EPIC-002"
+  - "EPIC-004"
+issues: []
+labels:
+  - "mvp"
+  - "playback"
+  - "files"
+  - "week-2"
+target_date: null
+created_at: "2026-01-17"
+updated_at: "2026-01-17"
