@@ -1,6 +1,6 @@
 id: "ISSUE-001"
 title: "Window thumbnails not displaying in Source Picker"
-status: resolved
+status: complete
 priority: p1
 epic: "EPIC-007"
 type: bug

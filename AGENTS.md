@@ -17,7 +17,7 @@ Instructions for AI agents working on this project.
 
 ### Epic Dependencies
 
-Always check the `dependencies` field in each epic. Never start an epic until all its dependencies are `completed`.
+Always check the `dependencies` field in each epic. Never start an epic until all its dependencies are `complete`.
 
 ---
 
@@ -55,7 +55,7 @@ After completing an epic, verify ALL acceptance criteria before marking complete
 
 1. Read the `acceptance_criteria` list in the epic file
 2. Test each criterion manually or via automated tests
-3. Only mark `status: completed` when ALL criteria pass
+3. Only mark `status: complete` when ALL criteria pass
 4. If any criterion fails, log an issue and keep status as `in_progress`
 
 ---
@@ -97,7 +97,7 @@ updated_at: "YYYY-MM-DD"
 
 Edit `.prodman/epics/EPIC-XXX.yaml`:
 ```yaml
-status: completed  # was: in_progress
+status: complete  # was: in_progress
 updated_at: "YYYY-MM-DD"
 ```
 
@@ -107,8 +107,8 @@ updated_at: "YYYY-MM-DD"
 |--------|---------|
 | `planning` | Not yet started |
 | `in_progress` | Currently being implemented |
-| `blocked` | Waiting on dependency or decision |
-| `completed` | Done and verified |
+| `complete` | Done and verified |
+| `cancelled` | Project cancelled |
 
 ---
 
@@ -127,7 +127,7 @@ When you encounter bugs, blockers, or unexpected behavior, create an issue file.
 ```yaml
 id: "ISSUE-XXX"
 title: "Brief description"
-status: open
+status: planning
 priority: p1  # p0=critical, p1=high, p2=medium, p3=low
 epic: "EPIC-XXX"  # Related epic, if any
 type: bug  # bug | blocker | enhancement
@@ -147,11 +147,10 @@ updated_at: "YYYY-MM-DD"
 
 | Status | Meaning |
 |--------|---------|
-| `open` | Newly created |
+| `planning` | Newly created |
 | `in_progress` | Being worked on |
-| `resolved` | Fixed, pending verification |
-| `closed` | Verified fixed |
-| `wont_fix` | Decided not to address |
+| `complete` | Fixed, pending verification |
+| `cancelled` | Decided not to address |
 
 ---
 
@@ -166,6 +165,6 @@ cat .prodman/specs/SPEC-XXX.md   # Read related spec
 
 ### After Completing Work
 1. Verify all acceptance criteria pass
-2. Update epic status to `completed`
+2. Update epic status to `complete`
 3. Log any issues discovered
 4. Check for next epic in roadmap
