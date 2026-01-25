@@ -9,6 +9,7 @@ import { RecordingTimer } from './components/RecordingTimer'
 import { VideoPlayer } from './components/VideoPlayer'
 import { RecordingsPanel } from './components/RecordingsPanel'
 import { SourcePicker } from './components/SourcePicker'
+import type { CameraShape } from './hooks/useCanvasCompositor'
 
 type AppState = 'idle' | 'source-select' | 'countdown' | 'recording' | 'paused' | 'stopped' | 'viewing'
 
@@ -16,6 +17,10 @@ function App() {
   const [appState, setAppState] = useState<AppState>('idle')
   const [audioEnabled, setAudioEnabled] = useState(true)
   const [viewingRecording, setViewingRecording] = useState<Recording | null>(null)
+  const [cameraShape, setCameraShape] = useState<CameraShape>(() => {
+    const saved = localStorage.getItem('walkthru-camera-shape')
+    return (saved as CameraShape) || 'rounded-rectangle'
+  })
 
   const {
     recordedBlob,
@@ -24,7 +29,7 @@ function App() {
     pauseRecording,
     resumeRecording,
     error: recorderError
-  } = useRecorder()
+  } = useRecorder({ cameraShape })
 
   const {
     isEnabled: webcamEnabled,
@@ -62,6 +67,11 @@ function App() {
 
   const handleRecordClick = () => {
     setAppState('source-select')
+  }
+
+  const handleShapeChange = (shape: CameraShape) => {
+    setCameraShape(shape)
+    localStorage.setItem('walkthru-camera-shape', shape)
   }
 
   const handleSourceSelect = async (source: Source) => {
@@ -205,6 +215,32 @@ function App() {
                   />
                   <span className="toggle-label">Camera</span>
                 </label>
+
+                {webcamEnabled && (
+                  <div className="shape-selector">
+                    <span className="shape-label">Camera Shape</span>
+                    <div className="shape-buttons">
+                      <button
+                        className={`shape-btn ${cameraShape === 'rectangle' ? 'active' : ''}`}
+                        onClick={() => handleShapeChange('rectangle')}
+                      >
+                        <span className="shape-icon">▭</span> Rectangle
+                      </button>
+                      <button
+                        className={`shape-btn ${cameraShape === 'rounded-rectangle' ? 'active' : ''}`}
+                        onClick={() => handleShapeChange('rounded-rectangle')}
+                      >
+                        <span className="shape-icon">▢</span> Rounded
+                      </button>
+                      <button
+                        className={`shape-btn ${cameraShape === 'circle' ? 'active' : ''}`}
+                        onClick={() => handleShapeChange('circle')}
+                      >
+                        <span className="shape-icon">●</span> Circle
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <button className="record-button" onClick={handleRecordClick}>
@@ -305,6 +341,7 @@ function App() {
       <WebcamPreview
         stream={webcamStream}
         isVisible={webcamEnabled && (appState === 'idle' || appState === 'recording' || appState === 'paused')}
+        cameraShape={cameraShape}
       />
     </div>
   )

@@ -1,17 +1,21 @@
 import { useRef, useCallback, useEffect } from 'react'
 
+export type CameraShape = 'rectangle' | 'rounded-rectangle' | 'circle'
+
 export interface CompositorOptions {
   webcamPosition: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
   webcamSize: number // percentage of screen width (e.g., 0.2 = 20%)
   borderRadius: number
   padding: number
+  cameraShape: CameraShape
 }
 
 const DEFAULT_OPTIONS: CompositorOptions = {
   webcamPosition: 'bottom-right',
   webcamSize: 0.2,
   borderRadius: 12,
-  padding: 20
+  padding: 20,
+  cameraShape: 'rounded-rectangle'
 }
 
 interface CompositorState {
@@ -54,6 +58,36 @@ function drawRoundedRect(
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
   ctx.lineTo(x, y + radius)
   ctx.quadraticCurveTo(x, y, x + radius, y)
+  ctx.closePath()
+}
+
+function drawRectangle(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
+  ctx.beginPath()
+  ctx.rect(x, y, width, height)
+  ctx.closePath()
+}
+
+function drawCircle(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
+  // Use the smaller dimension to ensure it's a perfect circle
+  const diameter = Math.min(width, height)
+  const centerX = x + width / 2
+  const centerY = y + height / 2
+  const radius = diameter / 2
+
+  ctx.beginPath()
+  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
   ctx.closePath()
 }
 
@@ -104,7 +138,20 @@ function renderFrame(state: CompositorState) {
     }
 
     ctx.save()
-    drawRoundedRect(ctx, x, y, webcamWidth, webcamHeight, options.borderRadius)
+
+    // Apply clipping based on camera shape
+    switch (options.cameraShape) {
+      case 'rectangle':
+        drawRectangle(ctx, x, y, webcamWidth, webcamHeight)
+        break
+      case 'rounded-rectangle':
+        drawRoundedRect(ctx, x, y, webcamWidth, webcamHeight, options.borderRadius)
+        break
+      case 'circle':
+        drawCircle(ctx, x, y, webcamWidth, webcamHeight)
+        break
+    }
+
     ctx.clip()
     ctx.drawImage(webcamVideo, x, y, webcamWidth, webcamHeight)
     ctx.restore()

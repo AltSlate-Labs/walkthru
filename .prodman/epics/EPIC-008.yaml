@@ -1,0 +1,40 @@
+# Epic: Camera Shape Customization
+id: "EPIC-008"
+title: "Camera Shape Customization"
+status: complete
+priority: p1
+owner: null
+milestone: null
+spec: "SPEC-006"
+description: |
+  Add user-selectable camera overlay shapes for both preview and recordings,
+  allowing users to choose between rectangular, rounded rectangular, and circular
+  camera windows.
+
+  Features:
+  - Three camera shape options: Rectangle, Rounded Rectangle, Circle
+  - Shape selector UI visible when camera is enabled
+  - Immediate preview feedback when shape is changed
+  - Shape applied to both preview window and recording overlay
+  - User preference persists across app restarts (localStorage)
+  - Default to Rounded Rectangle (maintains current behavior)
+acceptance_criteria:
+  - "Shape selector appears when camera is enabled, hidden when disabled"
+  - "Three shape buttons render: Rectangle, Rounded, Circle"
+  - "Selected shape is visually indicated (active state)"
+  - "Preview window immediately reflects selected shape"
+  - "Recordings use selected camera shape in overlay"
+  - "Circle shape renders as perfect circle (no oval distortion)"
+  - "Shape preference persists after closing and reopening app"
+  - "Default shape is Rounded Rectangle (maintains current behavior)"
+  - "All 4 corner positions work correctly with each shape"
+dependencies: []
+issues: []
+labels:
+  - "feature"
+  - "ui"
+  - "customization"
+  - "camera"
+target_date: null
+created_at: "2026-01-25"
+updated_at: "2026-01-25"

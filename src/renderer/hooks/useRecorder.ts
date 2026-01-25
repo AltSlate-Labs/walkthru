@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
-import { useCanvasCompositor } from './useCanvasCompositor'
+import { useCanvasCompositor, type CompositorOptions } from './useCanvasCompositor'
 
 export type RecordingState = 'idle' | 'recording' | 'paused' | 'stopped'
 
@@ -18,7 +18,7 @@ interface UseRecorderReturn {
   error: string | null
 }
 
-export function useRecorder(): UseRecorderReturn {
+export function useRecorder(compositorOptions?: Partial<CompositorOptions>): UseRecorderReturn {
   const [state, setState] = useState<RecordingState>('idle')
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -27,7 +27,7 @@ export function useRecorder(): UseRecorderReturn {
   const chunksRef = useRef<Blob[]>([])
   const streamsRef = useRef<MediaStream[]>([])
 
-  const { startCompositing, stopCompositing } = useCanvasCompositor()
+  const { startCompositing, stopCompositing } = useCanvasCompositor(compositorOptions)
 
   const cleanupStreams = useCallback(() => {
     stopCompositing()

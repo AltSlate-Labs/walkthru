@@ -191,6 +191,60 @@ body {
   color: #fff;
 }
 
+/* Camera Shape Selector */
+.shape-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.shape-label {
+  font-size: 0.85rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shape-buttons {
+  display: flex;
+  gap: 0.5rem;
+  background: #15152a;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #2a2a4a;
+}
+
+.shape-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.shape-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.shape-btn.active {
+  background: #e63946;
+  color: #fff;
+}
+
+.shape-icon {
+  font-size: 1rem;
+}
+
 /* Webcam PiP preview */
 .webcam-preview {
   position: fixed;
@@ -198,11 +252,25 @@ body {
   right: 24px;
   width: 180px;
   height: 135px;
-  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   border: 2px solid #333;
   -webkit-app-region: no-drag;
+}
+
+/* Shape variants */
+.webcam-preview.shape-rectangle {
+  border-radius: 0;
+}
+
+.webcam-preview.shape-rounded-rectangle {
+  border-radius: 12px;
+}
+
+.webcam-preview.shape-circle {
+  border-radius: 50%;
+  width: 135px;
+  height: 135px;
 }
 
 .webcam-preview video {
