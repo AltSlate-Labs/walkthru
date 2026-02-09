@@ -1,0 +1,50 @@
+# Epic: Global Keyboard Shortcuts
+id: "EPIC-010"
+title: "Global Keyboard Shortcuts"
+status: planning
+priority: p2
+owner: null
+milestone: "POST-MVP"
+spec: null
+description: |
+  Add global keyboard shortcuts to control recording without needing to
+  interact with the application window. Allows users to start, stop, pause,
+  and toggle features while working in other applications.
+
+  Features:
+  - Global hotkey to start/stop recording (e.g., Cmd+Shift+5)
+  - Global hotkey to pause/resume recording
+  - Global hotkey to toggle camera on/off
+  - Global hotkey to toggle microphone on/off
+  - Shortcuts settings panel for customization
+  - Visual indicator when shortcuts are triggered
+  - Shortcuts work even when app is in background
+  - Prevent conflicts with system shortcuts
+  - All shortcuts configurable via settings
+  - Keyboard shortcuts persist across app restarts
+acceptance_criteria:
+  - "Cmd+Shift+5 starts recording from idle state"
+  - "Cmd+Shift+5 stops recording when already recording"
+  - "Cmd+Shift+P pauses/resumes recording"
+  - "Cmd+Shift+C toggles camera during idle state"
+  - "Cmd+Shift+M toggles microphone during idle state"
+  - "Shortcuts work when app is in background"
+  - "Settings panel displays all available shortcuts"
+  - "Users can customize shortcut key combinations"
+  - "Shortcuts are disabled during source selection and countdown"
+  - "Visual toast notification appears when shortcuts are triggered"
+  - "Conflicting shortcuts are prevented and show error message"
+  - "Shortcut preferences persist across app restarts"
+  - "Shortcuts can be disabled individually"
+  - "Reset to defaults button restores original shortcuts"
+dependencies:
+  - "EPIC-005"
+issues: []
+labels:
+  - "feature"
+  - "hotkeys"
+  - "accessibility"
+  - "ux"
+target_date: null
+created_at: "2026-01-26"
+updated_at: "2026-01-26"

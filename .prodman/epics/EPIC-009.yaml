@@ -1,0 +1,45 @@
+# Epic: Recording Quality & Format Options
+id: "EPIC-009"
+title: "Recording Quality & Format Options"
+status: complete
+priority: p1
+owner: null
+milestone: null
+spec: null
+description: |
+  Add quality presets (720p/1080p @ 15/30/60fps) and file size
+  estimation to give users control over recording quality while keeping
+  WebM as the only recording output format.
+
+  Features:
+  - Three quality presets: Low (720p/15fps), Medium (1080p/30fps), High (1080p/60fps)
+  - File size estimation before recording (displays MB/min)
+  - New recordings save in WebM format only
+  - Existing MP4 recordings remain visible and playable/exportable
+  - Quality preference persists across app restarts (localStorage)
+  - Default to Medium quality (1080p/30fps)
+acceptance_criteria:
+  - "Quality selector appears in idle state with 3 options"
+  - "Selected preset is visually indicated"
+  - "Recording resolution matches selected preset"
+  - "Recording framerate matches preset (15/30/60fps)"
+  - "Quality preference persists across app restarts"
+  - "Default is Medium (1080p/30fps)"
+  - "Size estimate displays in idle state (e.g., ~1.5 MB/min)"
+  - "Estimate updates when quality preset or audio toggle changes"
+  - "Preview screen shows Save as WebM button"
+  - "New recordings are saved as .webm files"
+  - "Existing .mp4 files appear in recordings list"
+  - "Both .webm and existing .mp4 files can be played and managed"
+  - "Export uses file-extension-appropriate save filters for .webm and .mp4"
+dependencies:
+  - "EPIC-008"
+issues:
+  - "ISSUE-002"
+labels:
+  - "feature"
+  - "quality"
+  - "formats"
+target_date: null
+created_at: "2026-01-26"
+updated_at: "2026-02-06"

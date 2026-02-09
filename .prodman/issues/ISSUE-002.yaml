@@ -1,0 +1,19 @@
+id: "ISSUE-002"
+title: "MP4 conversion fails during ffmpeg-wasm load"
+status: planning
+priority: p1
+epic: "EPIC-009"
+type: bug
+description: |
+  WebM to MP4 conversion fails because ffmpeg-wasm is initialized without
+  explicit local core paths, which depends on runtime loading behavior that
+  does not reliably resolve in the current app environment.
+steps_to_reproduce:
+  - "Record a video and stop recording to open preview."
+  - "Click Convert to MP4."
+  - "Wait for converter loading phase."
+expected_behavior: "Conversion completes and prompts user to save an MP4 file."
+actual_behavior: "Conversion fails before completion and MP4 output is not produced."
+workaround: "Save recording as WebM."
+created_at: "2026-02-06"
+updated_at: "2026-02-06"

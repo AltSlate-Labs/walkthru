@@ -30,6 +30,36 @@ milestones:
       - "Recording controls (start, pause, stop, countdown)"
       - "Basic local playback screen"
       - "UX polish and permission handling"
+  - id: "POST-MVP"
+    title: "Post-MVP Enhancements"
+    description: |
+      Quality of life improvements and advanced features
+    status: in_progress
+    target_date: null
+    epics:
+      - "EPIC-006"
+      - "EPIC-007"
+      - "EPIC-008"
+      - "EPIC-009"
+      - "EPIC-010"
+    deliverables:
+      - "Local recordings management panel"
+      - "Source picker for screen/window selection"
+      - "Camera shape customization (rectangle, rounded, circle)"
+      - "Recording quality presets and WebM-only output"
+      - "Global keyboard shortcuts for recording control"
+  - id: "FUTURE"
+    title: "Future Enhancements"
+    description: |
+      Advanced features and customization options for power users
+    status: planning
+    target_date: null
+    epics:
+      - "EPIC-011"
+      - "EPIC-012"
+    deliverables:
+      - "Drag-and-drop webcam positioning with custom presets"
+      - "System audio capture with independent volume controls"
 releases:
   - id: "v0.1.0"
     title: "MVP Release"
@@ -39,4 +69,18 @@ releases:
       - "MVP-W1"
       - "MVP-W2"
     target_date: null
-updated_at: 2026-01-17
+  - id: "v0.2.0"
+    title: "Enhanced Release"
+    description: "Quality improvements and format options"
+    status: in_progress
+    milestones:
+      - "POST-MVP"
+    target_date: null
+  - id: "v0.3.0"
+    title: "Advanced Features"
+    description: "Power user features and advanced customization"
+    status: planning
+    milestones:
+      - "FUTURE"
+    target_date: null
+updated_at: 2026-02-06

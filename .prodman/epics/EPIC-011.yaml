@@ -1,0 +1,47 @@
+# Epic: Webcam Position Customization
+id: "EPIC-011"
+title: "Webcam Position Customization"
+status: planning
+priority: p2
+owner: null
+milestone: null
+spec: null
+description: |
+  Allow users to customize the webcam overlay position beyond the four corner
+  presets. Includes drag-and-drop positioning and size adjustment for more
+  flexible camera placement in recordings.
+
+  Features:
+  - Drag-and-drop webcam preview to any position
+  - Resize webcam overlay with corner handles
+  - Snap-to-edge guides for alignment
+  - Lock position option to prevent accidental moves
+  - Custom position presets (save favorite positions)
+  - Preview grid overlay for precise positioning
+  - Position and size persist across recordings
+  - Reset to default corner positions button
+  - Minimum and maximum size constraints
+acceptance_criteria:
+  - "Users can drag webcam preview to any position on screen"
+  - "Corner handles allow resizing the webcam overlay"
+  - "Snap guides appear when near screen edges"
+  - "Lock position toggle prevents accidental dragging"
+  - "Save custom position preset with name"
+  - "Load saved position presets from dropdown"
+  - "Position and size persist between recordings"
+  - "Reset button returns to bottom-right corner default"
+  - "Minimum size is 80px, maximum is 400px"
+  - "Position stays within screen bounds"
+  - "Visual feedback shows draggable state on hover"
+dependencies:
+  - "EPIC-004"
+  - "EPIC-008"
+issues: []
+labels:
+  - "feature"
+  - "customization"
+  - "camera"
+  - "ux"
+target_date: null
+created_at: "2026-01-26"
+updated_at: "2026-01-26"

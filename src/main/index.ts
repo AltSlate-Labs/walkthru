@@ -151,7 +151,7 @@ ipcMain.handle('list-recordings', async () => {
   try {
     const files = fs.readdirSync(dir)
     return files
-      .filter(f => f.endsWith('.webm'))
+      .filter(f => f.endsWith('.webm') || f.endsWith('.mp4'))
       .map(filename => {
         const filepath = path.join(dir, filename)
         const stats = fs.statSync(filepath)
@@ -188,9 +188,21 @@ ipcMain.handle('delete-recording', async (_event, filepath: string) => {
 // Export (copy) recording to user-selected location
 ipcMain.handle('export-recording', async (_event, filepath: string) => {
   const filename = path.basename(filepath)
+  const extension = path.extname(filename).toLowerCase()
+  const filters =
+    extension === '.mp4'
+      ? [{ name: 'MP4 Video', extensions: ['mp4'] }]
+      : extension === '.webm'
+        ? [{ name: 'WebM Video', extensions: ['webm'] }]
+        : [
+            { name: 'Video Files', extensions: ['webm', 'mp4'] },
+            { name: 'WebM Video', extensions: ['webm'] },
+            { name: 'MP4 Video', extensions: ['mp4'] }
+          ]
+
   const { filePath, canceled } = await dialog.showSaveDialog(mainWindow!, {
     defaultPath: filename,
-    filters: [{ name: 'WebM Video', extensions: ['webm'] }]
+    filters
   })
 
   if (canceled || !filePath) {

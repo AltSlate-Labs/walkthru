@@ -9,7 +9,10 @@ import { RecordingTimer } from './components/RecordingTimer'
 import { VideoPlayer } from './components/VideoPlayer'
 import { RecordingsPanel } from './components/RecordingsPanel'
 import { SourcePicker } from './components/SourcePicker'
+import { QualitySelector } from './components/QualitySelector'
 import type { CameraShape } from './hooks/useCanvasCompositor'
+import { QUALITY_PRESETS, type QualityPreset } from './types/recording'
+import { estimateSizePerMinute } from './utils/sizeEstimator'
 
 type AppState = 'idle' | 'source-select' | 'countdown' | 'recording' | 'paused' | 'stopped' | 'viewing'
 
@@ -21,6 +24,12 @@ function App() {
     const saved = localStorage.getItem('walkthru-camera-shape')
     return (saved as CameraShape) || 'rounded-rectangle'
   })
+  const [qualityPreset, setQualityPreset] = useState<QualityPreset>(() => {
+    const saved = localStorage.getItem('walkthru-quality-preset')
+    return (saved as QualityPreset) || 'medium'
+  })
+
+  const qualityConfig = QUALITY_PRESETS[qualityPreset]
 
   const {
     recordedBlob,
@@ -29,7 +38,7 @@ function App() {
     pauseRecording,
     resumeRecording,
     error: recorderError
-  } = useRecorder({ cameraShape })
+  } = useRecorder({ cameraShape, frameRate: qualityConfig.frameRate })
 
   const {
     isEnabled: webcamEnabled,
@@ -74,6 +83,11 @@ function App() {
     localStorage.setItem('walkthru-camera-shape', shape)
   }
 
+  const handleQualityChange = (preset: QualityPreset) => {
+    setQualityPreset(preset)
+    localStorage.setItem('walkthru-quality-preset', preset)
+  }
+
   const handleSourceSelect = async (source: Source) => {
     await setRecordingSource(source.id)
     setAppState('countdown')
@@ -84,7 +98,11 @@ function App() {
   }
 
   const handleCountdownComplete = async () => {
-    await startRecording({ audio: audioEnabled, webcamStream: webcamEnabled ? webcamStream : null })
+    await startRecording({
+      audio: audioEnabled,
+      webcamStream: webcamEnabled ? webcamStream : null,
+      qualityConfig: qualityConfig
+    })
     setAppState('recording')
   }
 
@@ -241,6 +259,15 @@ function App() {
                     </div>
                   </div>
                 )}
+
+                <QualitySelector
+                  selected={qualityPreset}
+                  onChange={handleQualityChange}
+                />
+
+                <div className="size-estimator">
+                  Estimated: {estimateSizePerMinute(qualityConfig, audioEnabled)}
+                </div>
               </div>
 
               <button className="record-button" onClick={handleRecordClick}>
@@ -285,8 +312,11 @@ function App() {
 
               <div className="button-group">
                 <button className="save-button" onClick={handleSave}>
-                  Save
+                  Save as WebM
                 </button>
+              </div>
+
+              <div className="button-group">
                 <button className="secondary-button" onClick={handleRecordAgain}>
                   Record Again
                 </button>

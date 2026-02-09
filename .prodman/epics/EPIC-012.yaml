@@ -1,0 +1,49 @@
+# Epic: System Audio Capture
+id: "EPIC-012"
+title: "System Audio Capture"
+status: planning
+priority: p1
+owner: null
+milestone: null
+spec: null
+description: |
+  Capture system audio (computer sound output) in addition to or instead of
+  microphone audio. Enables recording of application sounds, music, video
+  playback, and other audio from the computer.
+
+  Features:
+  - Toggle for system audio capture (in addition to mic)
+  - Audio source selection: Mic only, System only, or Both
+  - Independent volume controls for mic and system audio
+  - Audio level meters showing real-time input levels
+  - Audio mixing when both sources are enabled
+  - Separate audio tracks option for advanced editing
+  - macOS screen recording permission handling
+  - Audio loopback implementation for macOS
+  - Preview audio before recording (optional)
+  - Audio preferences persist across sessions
+acceptance_criteria:
+  - "System audio toggle appears in idle state options"
+  - "Users can select: Mic Only, System Only, or Both"
+  - "System audio is captured when enabled"
+  - "Volume sliders independently control mic and system audio"
+  - "Visual audio level meters show real-time input"
+  - "Both audio sources mix correctly in recording"
+  - "Screen recording permission prompt appears on first use"
+  - "Audio loopback works correctly on macOS"
+  - "Audio preferences persist across app restarts"
+  - "Quality presets include appropriate audio bitrates"
+  - "No audio distortion or clipping at default settings"
+  - "Recordings play back with correct audio mix"
+dependencies:
+  - "EPIC-002"
+  - "EPIC-009"
+issues: []
+labels:
+  - "feature"
+  - "audio"
+  - "recording"
+  - "system-integration"
+target_date: null
+created_at: "2026-01-26"
+updated_at: "2026-01-26"

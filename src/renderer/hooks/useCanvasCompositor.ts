@@ -8,6 +8,7 @@ export interface CompositorOptions {
   borderRadius: number
   padding: number
   cameraShape: CameraShape
+  frameRate: number
 }
 
 const DEFAULT_OPTIONS: CompositorOptions = {
@@ -15,7 +16,8 @@ const DEFAULT_OPTIONS: CompositorOptions = {
   webcamSize: 0.2,
   borderRadius: 12,
   padding: 20,
-  cameraShape: 'rounded-rectangle'
+  cameraShape: 'rounded-rectangle',
+  frameRate: 30
 }
 
 interface CompositorState {
@@ -259,8 +261,8 @@ export function useCanvasCompositor(
       state.isRunning = true
       state.animationFrameId = requestAnimationFrame(() => renderFrame(state))
 
-      // Capture canvas stream at 30fps
-      const compositeStream = canvas.captureStream(30)
+      // Capture canvas stream at dynamic fps
+      const compositeStream = canvas.captureStream(opts.frameRate)
 
       return compositeStream
     },

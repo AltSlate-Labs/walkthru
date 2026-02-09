@@ -9,7 +9,7 @@ sync:
   auto_push: false
   branch_strategy: direct
 counters:
-  epic: 8
+  epic: 12
   spec: 6
   decision: 2
-  issue: 1
+  issue: 2

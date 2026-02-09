@@ -1,17 +1,19 @@
 import { useState, useRef, useCallback } from 'react'
 import { useCanvasCompositor, type CompositorOptions } from './useCanvasCompositor'
+import type { RecordingQualityConfig } from '../types/recording'
 
 export type RecordingState = 'idle' | 'recording' | 'paused' | 'stopped'
 
 export interface RecordingOptions {
   audio: boolean
   webcamStream?: MediaStream | null
+  qualityConfig: RecordingQualityConfig
 }
 
 interface UseRecorderReturn {
   state: RecordingState
   recordedBlob: Blob | null
-  startRecording: (options?: RecordingOptions) => Promise<void>
+  startRecording: (options: RecordingOptions) => Promise<void>
   stopRecording: () => void
   pauseRecording: () => void
   resumeRecording: () => void
@@ -37,7 +39,7 @@ export function useRecorder(compositorOptions?: Partial<CompositorOptions>): Use
     streamsRef.current = []
   }, [stopCompositing])
 
-  const startRecording = useCallback(async (options: RecordingOptions = { audio: false }) => {
+  const startRecording = useCallback(async (options: RecordingOptions) => {
     try {
       setError(null)
       setRecordedBlob(null)
@@ -47,9 +49,9 @@ export function useRecorder(compositorOptions?: Partial<CompositorOptions>): Use
       // Use standard getDisplayMedia - Electron's setDisplayMediaRequestHandler will handle it
       const displayStream = await navigator.mediaDevices.getDisplayMedia({
         video: {
-          frameRate: 30,
-          width: { ideal: 1920 },
-          height: { ideal: 1080 }
+          frameRate: options.qualityConfig.frameRate,
+          width: { ideal: options.qualityConfig.width },
+          height: { ideal: options.qualityConfig.height }
         },
         audio: false
       })
@@ -90,7 +92,10 @@ export function useRecorder(compositorOptions?: Partial<CompositorOptions>): Use
           ? 'video/webm;codecs=vp9'
           : 'video/webm'
 
-      const mediaRecorder = new MediaRecorder(combinedStream, { mimeType })
+      const mediaRecorder = new MediaRecorder(combinedStream, {
+        mimeType,
+        audioBitsPerSecond: options.qualityConfig.audioBitrate
+      })
       mediaRecorderRef.current = mediaRecorder
 
       mediaRecorder.ondataavailable = (event) => {
