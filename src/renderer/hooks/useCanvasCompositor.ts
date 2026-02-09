@@ -11,6 +11,11 @@ export interface CompositorOptions {
   frameRate: number
 }
 
+export interface CompositorOutputBounds {
+  maxWidth?: number
+  maxHeight?: number
+}
+
 const DEFAULT_OPTIONS: CompositorOptions = {
   webcamPosition: 'bottom-right',
   webcamSize: 0.2,
@@ -93,6 +98,66 @@ function drawCircle(
   ctx.closePath()
 }
 
+function toEven(value: number): number {
+  const rounded = Math.round(value)
+  return rounded % 2 === 0 ? rounded : rounded - 1
+}
+
+function fitWithinBounds(
+  sourceWidth: number,
+  sourceHeight: number,
+  bounds?: CompositorOutputBounds
+): { width: number; height: number } {
+  let width = sourceWidth
+  let height = sourceHeight
+
+  const maxWidth = bounds?.maxWidth
+  const maxHeight = bounds?.maxHeight
+
+  if (maxWidth && width > maxWidth) {
+    const scale = maxWidth / width
+    width *= scale
+    height *= scale
+  }
+
+  if (maxHeight && height > maxHeight) {
+    const scale = maxHeight / height
+    width *= scale
+    height *= scale
+  }
+
+  return {
+    width: Math.max(2, toEven(width)),
+    height: Math.max(2, toEven(height))
+  }
+}
+
+function drawVideoContained(
+  ctx: CanvasRenderingContext2D,
+  video: HTMLVideoElement,
+  canvas: HTMLCanvasElement
+) {
+  const videoWidth = video.videoWidth || canvas.width
+  const videoHeight = video.videoHeight || canvas.height
+  const videoAspect = videoWidth / videoHeight
+  const canvasAspect = canvas.width / canvas.height
+
+  let drawWidth = canvas.width
+  let drawHeight = canvas.height
+  let x = 0
+  let y = 0
+
+  if (videoAspect > canvasAspect) {
+    drawHeight = canvas.width / videoAspect
+    y = (canvas.height - drawHeight) / 2
+  } else if (videoAspect < canvasAspect) {
+    drawWidth = canvas.height * videoAspect
+    x = (canvas.width - drawWidth) / 2
+  }
+
+  ctx.drawImage(video, x, y, drawWidth, drawHeight)
+}
+
 function renderFrame(state: CompositorState) {
   if (!state.isRunning) return
 
@@ -109,7 +174,7 @@ function renderFrame(state: CompositorState) {
 
   // Draw screen capture at full size (only if video has data)
   if (screenVideo.readyState >= 2) {
-    ctx.drawImage(screenVideo, 0, 0, canvas.width, canvas.height)
+    drawVideoContained(ctx, screenVideo, canvas)
   }
 
   // Draw webcam with rounded corners if available and ready to play
@@ -191,7 +256,8 @@ function stopCompositor(state: CompositorState) {
 interface UseCanvasCompositorReturn {
   startCompositing: (
     screenStream: MediaStream,
-    webcamStream: MediaStream | null
+    webcamStream: MediaStream | null,
+    outputBounds?: CompositorOutputBounds
   ) => MediaStream
   stopCompositing: () => void
 }
@@ -203,7 +269,11 @@ export function useCanvasCompositor(
   const stateRef = useRef<CompositorState | null>(null)
 
   const startCompositing = useCallback(
-    (screenStream: MediaStream, webcamStream: MediaStream | null): MediaStream => {
+    (
+      screenStream: MediaStream,
+      webcamStream: MediaStream | null,
+      outputBounds?: CompositorOutputBounds
+    ): MediaStream => {
       // Clean up any existing compositor
       if (stateRef.current) {
         stopCompositor(stateRef.current)
@@ -220,8 +290,11 @@ export function useCanvasCompositor(
       // Get video track settings for dimensions
       const videoTrack = screenStream.getVideoTracks()[0]
       const settings = videoTrack.getSettings()
-      canvas.width = settings.width || 1920
-      canvas.height = settings.height || 1080
+      const sourceWidth = settings.width || 1920
+      const sourceHeight = settings.height || 1080
+      const outputSize = fitWithinBounds(sourceWidth, sourceHeight, outputBounds)
+      canvas.width = outputSize.width
+      canvas.height = outputSize.height
 
       const ctx = canvas.getContext('2d')
       if (!ctx) {
@@ -238,6 +311,17 @@ export function useCanvasCompositor(
       screenVideo.style.cssText = 'position:fixed;top:-9999px;left:-9999px;'
       document.body.appendChild(screenVideo)
       state.screenVideo = screenVideo
+
+      screenVideo.addEventListener('loadedmetadata', () => {
+        if (!state.canvas) return
+        const screenWidth = screenVideo.videoWidth || sourceWidth
+        const screenHeight = screenVideo.videoHeight || sourceHeight
+        const resized = fitWithinBounds(screenWidth, screenHeight, outputBounds)
+        if (state.canvas.width !== resized.width || state.canvas.height !== resized.height) {
+          state.canvas.width = resized.width
+          state.canvas.height = resized.height
+        }
+      }, { once: true })
 
       // Create video element for webcam stream if provided
       if (webcamStream && webcamStream.getVideoTracks().length > 0) {

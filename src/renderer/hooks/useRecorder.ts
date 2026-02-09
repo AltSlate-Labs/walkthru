@@ -46,13 +46,19 @@ export function useRecorder(compositorOptions?: Partial<CompositorOptions>): Use
       chunksRef.current = []
       cleanupStreams()
 
+      const displayVideoConstraints: MediaTrackConstraints = {
+        frameRate: options.qualityConfig.frameRate
+      }
+
+      // When compositing with webcam, keep source dimensions native and downscale in compositor.
+      if (!options.webcamStream) {
+        displayVideoConstraints.width = { ideal: options.qualityConfig.width }
+        displayVideoConstraints.height = { ideal: options.qualityConfig.height }
+      }
+
       // Use standard getDisplayMedia - Electron's setDisplayMediaRequestHandler will handle it
       const displayStream = await navigator.mediaDevices.getDisplayMedia({
-        video: {
-          frameRate: options.qualityConfig.frameRate,
-          width: { ideal: options.qualityConfig.width },
-          height: { ideal: options.qualityConfig.height }
-        },
+        video: displayVideoConstraints,
         audio: false
       })
       streamsRef.current.push(displayStream)
@@ -61,7 +67,10 @@ export function useRecorder(compositorOptions?: Partial<CompositorOptions>): Use
       let videoStream: MediaStream
       if (options.webcamStream) {
         // Use canvas compositor to merge screen and webcam
-        videoStream = startCompositing(displayStream, options.webcamStream)
+        videoStream = startCompositing(displayStream, options.webcamStream, {
+          maxWidth: options.qualityConfig.width,
+          maxHeight: options.qualityConfig.height
+        })
       } else {
         videoStream = displayStream
       }
