@@ -1,6 +1,6 @@
 {
-  "name": "walkthru",
-  "version": "0.1.0",
+  "name": "@altslate/walkthru",
+  "version": "0.1.1",
   "description": "Local-first Loom replacement for camera + screen recording",
   "main": "dist-electron/main/index.js",
   "license": "MIT",
@@ -23,6 +23,9 @@
   ],
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist",

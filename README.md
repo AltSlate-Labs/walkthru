@@ -40,7 +40,7 @@ Walkthru is a lightweight, privacy-focused Loom replacement built with Electron 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/walkthru.git
+   git clone https://github.com/AltSlate-Labs/walkthru.git
    cd walkthru
    ```
 
