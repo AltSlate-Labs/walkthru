@@ -1,13 +1,48 @@
 {
   "name": "walkthru",
   "version": "0.1.0",
-  "description": "Local-first screen recording",
+  "description": "Local-first Loom replacement for camera + screen recording",
   "main": "dist-electron/main/index.js",
+  "license": "MIT",
+  "author": "AltSlate Labs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AltSlate-Labs/walkthru.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AltSlate-Labs/walkthru/issues"
+  },
+  "homepage": "https://github.com/AltSlate-Labs/walkthru#readme",
+  "keywords": [
+    "loom-replacement",
+    "screen-recorder",
+    "face-recorder",
+    "electron",
+    "react",
+    "privacy"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "dist-electron",
+    "public/icon.png",
+    "README.md",
+    "LICENSE",
+    "ss1.png",
+    "ss2.png",
+    "ss3.png",
+    "ss4.png"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder",
+    "build": "npm run build:app",
+    "build:package": "tsc && vite build",
+    "build:app": "npm run build:package && electron-builder",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepack": "npm run build:package"
   },
   "dependencies": {
     "react": "^18.2.0",
