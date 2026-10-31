@@ -134,14 +134,14 @@ function App() {
       const uint8Array = new Uint8Array(arrayBuffer)
       await window.electronAPI.invoke('save-recording', uint8Array)
       await refreshRecordings()
-
-      // Cleanup and go back to idle to show the new recording in list
+    } catch (err) {
+      console.error('Failed to save recording:', err)
+    } finally {
+      // Always cleanup object URL and return to idle
       if (videoUrl) {
         URL.revokeObjectURL(videoUrl)
       }
       setAppState('idle')
-    } catch (err) {
-      console.error('Failed to save recording:', err)
     }
   }
 

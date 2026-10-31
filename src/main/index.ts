@@ -1,7 +1,5 @@
 import { app, BrowserWindow, ipcMain, dialog, desktopCapturer, session, shell, systemPreferences } from 'electron'
 
-// ... existing code ...
-
 // Check screen recording permission (macOS only)
 ipcMain.handle('check-screen-permission', async () => {
   if (process.platform !== 'darwin') {
