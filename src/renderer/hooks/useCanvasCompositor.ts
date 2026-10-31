@@ -265,7 +265,7 @@ interface UseCanvasCompositorReturn {
 export function useCanvasCompositor(
   options: Partial<CompositorOptions> = {}
 ): UseCanvasCompositorReturn {
-  const opts = { ...DEFAULT_OPTIONS, ...options }
+  const optsRef = useRef({ ...DEFAULT_OPTIONS, ...options })
   const stateRef = useRef<CompositorState | null>(null)
 
   const startCompositing = useCallback(
@@ -280,7 +280,7 @@ export function useCanvasCompositor(
       }
 
       // Create new state
-      const state = createCompositorState(opts)
+      const state = createCompositorState(optsRef.current)
       stateRef.current = state
 
       // Create canvas
@@ -346,11 +346,11 @@ export function useCanvasCompositor(
       state.animationFrameId = requestAnimationFrame(() => renderFrame(state))
 
       // Capture canvas stream at dynamic fps
-      const compositeStream = canvas.captureStream(opts.frameRate)
+      const compositeStream = canvas.captureStream(optsRef.current.frameRate)
 
       return compositeStream
     },
-    [opts]
+    []
   )
 
   const stopCompositing = useCallback(() => {

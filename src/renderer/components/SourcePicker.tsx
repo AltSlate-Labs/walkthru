@@ -109,7 +109,7 @@ export function SourcePicker({ isOpen, onSelect, onCancel }: SourcePickerProps) 
               <span className="warning-icon">⚠️</span>
               <div className="warning-text">
                 <strong>Screen Recording permission required</strong>
-                <p>Enable "Screen Recording" for this app in System Settings to see thumbnails.</p>
+                <p>Enable &quot;Screen Recording&quot; for this app in System Settings to see thumbnails.</p>
               </div>
             </div>
           )}

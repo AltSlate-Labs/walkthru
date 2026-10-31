@@ -23,13 +23,6 @@ export function RecordingTimer({ isRunning }: RecordingTimerProps) {
     return () => clearInterval(interval)
   }, [isRunning])
 
-  // Reset when not running and seconds is 0
-  useEffect(() => {
-    if (!isRunning) {
-      setSeconds(0)
-    }
-  }, [isRunning])
-
   return (
     <div className="recording-timer">
       {formatTime(seconds)}
